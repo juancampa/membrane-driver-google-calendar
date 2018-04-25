@@ -1,0 +1,13 @@
+{
+  "name": "googlecalendar",
+  "version": "0.0.1",
+  "description": "Google Calendar driver for Membrane",
+  "author": "Juan Campa <juancampa@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "es6-promisify": "^6.0.0",
+    "googleapis": "^29.0.0",
+    "supports-color": "^5.4.0"
+  }
+}

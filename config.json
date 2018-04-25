@@ -1,0 +1,229 @@
+{
+ "imports": [],
+ "dependencies": [],
+ "environment": [
+  {
+   "name": "CLIENT_ID",
+   "description": "The API clientID"
+  },
+  {
+   "name": "CLIENT_SECRET",
+   "description": "The API client secret"
+  }
+ ],
+ "endpoints": [
+  {
+   "name": "auth",
+   "type": "https",
+   "description": "Visit this endpoint to authorize access to your account",
+   "options": {
+    "response": true
+   }
+  },
+  {
+   "name": "redirect",
+   "type": "https",
+   "description": "Set this URL in Google API Console for oauth redirect",
+   "options": {}
+  }
+ ],
+ "schema": {
+  "types": [
+   {
+    "name": "Root",
+    "fields": [
+     {
+      "name": "calendars",
+      "type": "CalendarCollection"
+     }
+    ],
+    "computedFields": [],
+    "actions": [],
+    "events": []
+   },
+   {
+    "name": "CalendarCollection",
+    "fields": [],
+    "computedFields": [
+     {
+      "name": "all",
+      "type": "List",
+      "ofType": {
+       "type": "Calendar"
+      }
+     },
+     {
+      "name": "one",
+      "type": "Calendar",
+      "params": [
+       {
+        "name": "id",
+        "type": "String"
+       }
+      ]
+     }
+    ],
+    "actions": [],
+    "events": []
+   },
+   {
+    "name": "Calendar",
+    "fields": [
+     {
+      "name": "id",
+      "type": "String"
+     },
+     {
+      "name": "summary",
+      "type": "String"
+     }
+    ],
+    "computedFields": [
+     {
+      "name": "self",
+      "type": "Ref",
+      "ofType": {
+       "type": "Calendar"
+      }
+     },
+     {
+      "name": "event",
+      "type": "EventCollection"
+     }
+    ],
+    "actions": [],
+    "events": []
+   },
+   {
+    "name": "EventCollection",
+    "fields": [],
+    "computedFields": [
+     {
+      "name": "many",
+      "type": "List",
+      "ofType": {
+       "type": "Event"
+      },
+      "params": [
+       {
+        "name": "calendar",
+        "type": "Calendar"
+       }
+      ]
+     },
+     {
+      "name": "one",
+      "type": "Event",
+      "params": [
+       {
+        "name": "id",
+        "type": "String"
+       }
+      ]
+     }
+    ],
+    "actions": [],
+    "events": []
+   },
+   {
+    "name": "Event",
+    "fields": [
+     {
+      "name": "id",
+      "type": "String"
+     },
+     {
+      "name": "summary",
+      "type": "String"
+     },
+     {
+      "name": "end",
+      "type": "EventTime"
+     },
+     {
+      "name": "start",
+      "type": "EventTime"
+     },
+     {
+      "name": "recurrence",
+      "type": "List",
+      "ofType": {
+       "type": "String"
+      }
+     }
+    ],
+    "computedFields": [
+     {
+      "name": "instance",
+      "type": "EventInstanceCollection"
+     }
+    ],
+    "actions": [],
+    "events": []
+   },
+   {
+    "name": "EventInstanceCollection",
+    "fields": [],
+    "computedFields": [
+     {
+      "name": "many",
+      "type": "List",
+      "ofType": {
+       "type": "Event"
+      }
+     },
+     {
+      "name": "one",
+      "type": "Event",
+      "params": [
+       {
+        "name": "id",
+        "type": "String"
+       }
+      ]
+     }
+    ],
+    "actions": [],
+    "events": []
+   },
+   {
+    "name": "EventTime",
+    "fields": [
+     {
+      "name": "date",
+      "type": "String"
+     },
+     {
+      "name": "dateTime",
+      "type": "String"
+     },
+     {
+      "name": "timeZone",
+      "type": "String"
+     }
+    ],
+    "computedFields": [],
+    "actions": [
+     {
+      "name": "setValue",
+      "type": "Int",
+      "params": [
+       {
+        "name": "fieldName",
+        "type": "String"
+       },
+       {
+        "name": "value",
+        "type": "String"
+       }
+      ]
+     }
+    ],
+    "events": []
+   }
+  ]
+ },
+ "expressions": [],
+ "database": [],
+ "isDriver": false
+}
