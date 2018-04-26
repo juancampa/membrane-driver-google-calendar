@@ -70,28 +70,36 @@ export let Reminder = {
 };
 
 export const EventCollection = {
-  async many({ args, self }) {
-    const { id } = self.match(root.calendars.one());
-    const result = await client.events.list({
-      calendarId: id,
-      maxResults: 1000,
-    });
-    return result && result.items;
-  },
-
   async one({ args, self }) {
     const { id: calendarId } = self.match(root.calendars.one());
     const result = await client.events.get({ calendarId, eventId: args.id });
     return result;
+  },
+  async page({ args, self }) {
+    const { id } = self.match(root.calendars.one());
+    const result = await client.events.list({ calendarId: id, ...args });
+    return result
+  },
+};
+
+export let EventPage = {
+  next({ self, source }) {
+    if (source.nextPageToken === undefined) {
+      return null;
+    }
+    const args = self.match(root.calendars().events().page());
+    return root.calendars({ id: calendarId }).events().page({ ...args, pageToken: source.nextPageToken });
+  },
+  items({ source }) {
+    return source.items;
   },
 };
 
 export const Event = {
   self({ source, self, parent }) {
     const { id: calendarId } = self.match(root.calendars.one());
-    return root.calendars({ id: calendarId }).event().one({ id: source.id });
+    return root.calendars({ id: calendarId }).events().one({ id: source.id });
   },
-
   instance() {
     return {};
   },

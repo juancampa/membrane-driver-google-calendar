@@ -197,7 +197,7 @@
       }
      },
      {
-      "name": "event",
+      "name": "events",
       "type": "EventCollection"
      }
     ],
@@ -233,19 +233,6 @@
     "fields": [],
     "computedFields": [
      {
-      "name": "many",
-      "type": "List",
-      "ofType": {
-       "type": "Event"
-      },
-      "params": [
-       {
-        "name": "calendar",
-        "type": "Calendar"
-       }
-      ]
-     },
-     {
       "name": "one",
       "type": "Event",
       "params": [
@@ -254,6 +241,98 @@
         "type": "String"
        }
       ]
+     },
+     {
+      "name": "page",
+      "type": "EventPage",
+      "params": [
+       {
+        "name": "calendar",
+        "type": "Calendar"
+       },
+       {
+        "name": "alwaysIncludeEmail",
+        "type": "Boolean"
+       },
+       {
+        "name": "iCalUID",
+        "type": "String"
+       },
+       {
+        "name": "maxAttendees",
+        "type": "Int"
+       },
+       {
+        "name": "maxResults",
+        "type": "Int"
+       },
+       {
+        "name": "orderBy",
+        "type": "String"
+       },
+       {
+        "name": "pageToken",
+        "type": "String"
+       },
+       {
+        "name": "privateExtendedProperty",
+        "type": "String"
+       },
+       {
+        "name": "q",
+        "type": "String"
+       },
+       {
+        "name": "showDeleted",
+        "type": "Boolean"
+       },
+       {
+        "name": "showHiddenInvitations",
+        "type": "Boolean"
+       },
+       {
+        "name": "singleEvents",
+        "type": "Boolean"
+       },
+       {
+        "name": "timeMax",
+        "type": "String"
+       },
+       {
+        "name": "timeMin",
+        "type": "String"
+       },
+       {
+        "name": "timeZone",
+        "type": "String"
+       },
+       {
+        "name": "updateMin",
+        "type": "String"
+       }
+      ]
+     }
+    ],
+    "actions": [],
+    "events": []
+   },
+   {
+    "name": "EventPage",
+    "fields": [],
+    "computedFields": [
+     {
+      "name": "items",
+      "type": "List",
+      "ofType": {
+       "type": "Event"
+      }
+     },
+     {
+      "name": "next",
+      "type": "Ref",
+      "ofType": {
+       "type": "EventPage"
+      }
      }
     ],
     "actions": [],
