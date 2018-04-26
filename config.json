@@ -46,13 +46,6 @@
     "fields": [],
     "computedFields": [
      {
-      "name": "all",
-      "type": "List",
-      "ofType": {
-       "type": "Calendar"
-      }
-     },
-     {
       "name": "one",
       "type": "Calendar",
       "params": [
@@ -61,6 +54,60 @@
         "type": "String"
        }
       ]
+     },
+     {
+      "name": "page",
+      "type": "CalendarPage",
+      "description": "All the calendars",
+      "params": [
+       {
+        "name": "maxResults",
+        "type": "Int",
+        "description": "Maximum number of threads to return."
+       },
+       {
+        "name": "minAcessRole",
+        "type": "String",
+        "description": "The minimum access role for the user in the returned entries."
+       },
+       {
+        "name": "pageToken",
+        "type": "String",
+        "description": "Page token to retrieve a specific page of results in the list"
+       },
+       {
+        "name": "showDeleted",
+        "type": "Boolean",
+        "description": "Whether to include deleted calendar list entries in the result."
+       },
+       {
+        "name": "showHidden",
+        "type": "Boolean",
+        "description": "Whether to show hidden entries."
+       }
+      ]
+     }
+    ],
+    "actions": [],
+    "events": []
+   },
+   {
+    "name": "CalendarPage",
+    "fields": [],
+    "computedFields": [
+     {
+      "name": "items",
+      "type": "List",
+      "ofType": {
+       "type": "Calendar"
+      }
+     },
+     {
+      "name": "next",
+      "type": "Ref",
+      "ofType": {
+       "type": "CalendarPage"
+      }
      }
     ],
     "actions": [],
@@ -74,8 +121,71 @@
       "type": "String"
      },
      {
+      "name": "kind",
+      "type": "String"
+     },
+     {
+      "name": "etag",
+      "type": "String"
+     },
+     {
       "name": "summary",
       "type": "String"
+     },
+     {
+      "name": "description",
+      "type": "String"
+     },
+     {
+      "name": "location",
+      "type": "String"
+     },
+     {
+      "name": "timeZone",
+      "type": "String"
+     },
+     {
+      "name": "summaryOverride",
+      "type": "String"
+     },
+     {
+      "name": "colorId",
+      "type": "String"
+     },
+     {
+      "name": "backgroundColor",
+      "type": "String"
+     },
+     {
+      "name": "foregroundColor",
+      "type": "String"
+     },
+     {
+      "name": "hidden",
+      "type": "Boolean"
+     },
+     {
+      "name": "selected",
+      "type": "Boolean"
+     },
+     {
+      "name": "primary",
+      "type": "Boolean"
+     },
+     {
+      "name": "deleted",
+      "type": "Boolean"
+     },
+     {
+      "name": "accessRole",
+      "type": "String"
+     },
+     {
+      "name": "defaultReminders",
+      "type": "List",
+      "ofType": {
+       "type": "Reminder"
+      }
      }
     ],
     "computedFields": [
@@ -89,6 +199,30 @@
      {
       "name": "event",
       "type": "EventCollection"
+     }
+    ],
+    "actions": [],
+    "events": []
+   },
+   {
+    "name": "Reminder",
+    "fields": [
+     {
+      "name": "method",
+      "type": "String"
+     },
+     {
+      "name": "minutes",
+      "type": "Int"
+     }
+    ],
+    "computedFields": [
+     {
+      "name": "self",
+      "type": "Ref",
+      "ofType": {
+       "type": "Reminder"
+      }
      }
     ],
     "actions": [],

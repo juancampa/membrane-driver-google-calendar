@@ -1,4 +1,9 @@
-import { client, authorize, handleAuthorize, handleRedirect } from './client.js';
+import {
+  client,
+  authorize,
+  handleAuthorize,
+  handleRedirect,
+} from './client.js';
 
 const { root } = program.refs;
 
@@ -23,13 +28,39 @@ export async function endpoint({ name, req }) {
 }
 
 export const CalendarCollection = {
-  all({ args }) {
-    throw new Error('TODO: Jhonny');
-  },
-
   async one({ args }) {
-    const result = await client.calendars.get({ calendarId: args.id });
+    const result = await client.calendarList.get({ calendarId: args.id });
     return result;
+  },
+  async page({ args }) {
+    const options = {};
+    const params = [
+      'maxResults',
+      'minAcessRole',
+      'pageToken',
+      'showDeleted',
+      'showHidden',
+    ];
+    for (let param of params) {
+      if (args[param] !== undefined) {
+        options[param] = args[param];
+      }
+    }
+    const result = await client.calendarList.list({ ...options });
+    return result;
+  },
+};
+
+export let CalendarPage = {
+  next({ self, source }) {
+    if (source.nextPageToken === undefined) {
+      return null;
+    }
+    const args = self.match(root.calendars.page());
+    return root.calendars.page({ ...args, pageToken: source.nextPageToken });
+  },
+  items({ source }) {
+    return source.items;
   },
 };
 
@@ -37,18 +68,26 @@ export const Calendar = {
   self({ source }) {
     return root.calendars.one({ id: source.id });
   },
-
   event() {
     // HACK. Should we replace these type of hacks with a special type of
     // fields? e.g "namespace"
     return {};
-  }
+  },
+};
+
+export let Reminder = {
+  self({ source, self, parent }) {
+    return self || parent.pop().push('id', { id: source.id });
+  },
 };
 
 export const EventCollection = {
   async many({ args, self }) {
     const { id } = self.match(root.calendars.one());
-    const result = await client.events.list({ calendarId: id, maxResults: 1000 });
+    const result = await client.events.list({
+      calendarId: id,
+      maxResults: 1000,
+    });
     return result && result.items;
   },
 
@@ -60,8 +99,9 @@ export const EventCollection = {
 };
 
 export const Event = {
-  self({ source }) {
-    throw new Error('TODO: Jhonny');
+  self({ source, self, parent }) {
+    const { id: calendarId } = self.match(root.calendars.one());
+    return root.calendars({ id: calendarId }).event().one({ id: source.id });
   },
 
   instance() {
@@ -72,7 +112,9 @@ export const Event = {
 export const EventInstanceCollection = {
   async many({ self }) {
     const { id: calendarId } = self.match(root.calendars.one());
-    const { id: eventId } = self.match(root.calendars.one().event().one());
+    const { id: eventId } = self.match(
+      root.calendars.one().event().one()
+    );
     const result = await client.events.instances({ calendarId, eventId });
     return result && result.items;
   },
@@ -92,12 +134,12 @@ export const EventTime = {
 
     const { id: calendarId } = self.match(root.calendars.one());
     const { id: eventId } = self.match(root.calendars.one().event().one());
-    
+
     const ref = self.ref;
     const propName = ref.path[ref.path.length - 1].name;
 
-    const resource = { [propName] : { [args.fieldName]: args.value } };
+    const resource = { [propName]: { [args.fieldName]: args.value } };
     const result = await client.events.patch({ calendarId, eventId, resource });
     return result;
-  }
+  },
 };
