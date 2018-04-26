@@ -2,27 +2,27 @@ const { environment, schema, endpoints } = program;
 
 environment
   .add('CLIENT_ID', 'The API clientID')
-  .add('CLIENT_SECRET', 'The API client secret');
+  .add('CLIENT_SECRET', 'The API client secret')
 
 endpoints
-  .https('auth', 'Visit this endpoint to authorize access to your account', {response: true,})
-  .https('redirect', 'Set this URL in Google API Console for oauth redirect');
+  .https('auth', 'Visit this endpoint to authorize access to your account', {response: true})
+  .https('redirect', 'Set this URL in Google API Console for oauth redirect')
 
-schema.type('Root').field('calendars', 'CalendarCollection');
+schema.type('Root').field('calendars', 'CalendarCollection')
 
 schema.type('CalendarCollection')
   .computed('one', 'Calendar')
-  .param('id', 'String')
+    .param('id', 'String')
   .computed('page', 'CalendarPage', 'All the calendars')
-  .param('maxResults', 'Int', 'Maximum number of threads to return.')
-  .param('minAcessRole','String','The minimum access role for the user in the returned entries.')
-  .param('pageToken','String','Page token to retrieve a specific page of results in the list')
-  .param('showDeleted','Boolean','Whether to include deleted calendar list entries in the result.')
-  .param('showHidden', 'Boolean', 'Whether to show hidden entries.');
+    .param('maxResults', 'Int', 'Maximum number of threads to return.')
+    .param('minAcessRole','String','The minimum access role for the user in the returned entries.')
+    .param('pageToken','String','Page token to retrieve a specific page of results in the list')
+    .param('showDeleted','Boolean','Whether to include deleted calendar list entries in the result.')
+    .param('showHidden', 'Boolean', 'Whether to show hidden entries.')
 
 schema.type('CalendarPage')
   .computed('items', '[Calendar]')
-  .computed('next', 'CalendarPage*');
+  .computed('next', 'CalendarPage*')
 
 schema.type('Calendar')
   .computed('self', 'Calendar*')
@@ -52,9 +52,9 @@ schema.type('Reminder')
 
 schema.type('EventCollection')
   .computed('many', '[Event]')
-  .param('calendar', 'Calendar')
+    .param('calendar', 'Calendar')
   .computed('one', 'Event')
-  .param('id', 'String');
+    .param('id', 'String')
 
 schema.type('Event')
   .field('id', 'String')
@@ -62,12 +62,12 @@ schema.type('Event')
   .field('end', 'EventTime')
   .field('start', 'EventTime')
   .field('recurrence', '[String]')
-  .computed('instance', 'EventInstanceCollection');
+  .computed('instance', 'EventInstanceCollection')
 
 schema.type('EventInstanceCollection')
   .computed('many', '[Event]')
   .computed('one', 'Event')
-  .param('id', 'String');
+    .param('id', 'String')
 
 // schema.type('EventRecurrence')
 //   .
@@ -82,5 +82,5 @@ schema.type('EventTime')
   // scalars. Should we have a Variant wrapper class that can be used to
   // represent any scalar?
   .action('setValue')
-  .param('fieldName', 'String')
-  .param('value', 'String');
+    .param('fieldName', 'String')
+    .param('value', 'String')
