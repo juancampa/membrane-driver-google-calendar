@@ -29,12 +29,10 @@ export async function endpoint({ name, req }) {
 
 export const CalendarCollection = {
   async one({ args }) {
-    const result = await client.calendarList.get({ calendarId: args.id });
-    return result;
+    return client.calendarList.get({ calendarId: args.id });
   },
   async page({ args }) {
-    const result = await client.calendarList.list({ ...args });
-    return result;
+    return await client.calendarList.list({ ...args });
   },
 };
 
@@ -72,13 +70,11 @@ export let Reminder = {
 export const EventCollection = {
   async one({ args, self }) {
     const { id: calendarId } = self.match(root.calendars.one());
-    const result = await client.events.get({ calendarId, eventId: args.id });
-    return result;
+    return await client.events.get({ calendarId, eventId: args.id });
   },
   async page({ args, self }) {
     const { id } = self.match(root.calendars.one());
-    const result = await client.events.list({ calendarId: id, ...args });
-    return result
+    return client.events.list({ calendarId: id, ...args });
   },
 };
 
@@ -115,11 +111,9 @@ export const EventInstanceCollection = {
     const result = await client.events.instances({ calendarId, eventId });
     return result && result.items;
   },
-
   async one({ args, self }) {
     const { id: calendarId } = self.match(root.calendars.one());
-    const result = await client.events.get({ calendarId, eventId: args.id });
-    return result;
+    return client.events.get({ calendarId, eventId: args.id });
   },
 };
 
