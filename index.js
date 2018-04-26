@@ -63,8 +63,9 @@ export const Calendar = {
 };
 
 export let Reminder = {
-  self({ source, self, parent }) {
-    return self || parent.pop().push('id', { id: source.id });
+  self({ source }) {
+    // TODO
+    return null;
   },
 };
 
