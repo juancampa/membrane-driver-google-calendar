@@ -55,7 +55,7 @@ export const Calendar = {
   self({ source }) {
     return root.calendars.one({ id: source.id });
   },
-  event() {
+  events() {
     // HACK. Should we replace these type of hacks with a special type of
     // fields? e.g "namespace"
     return {};
@@ -87,8 +87,9 @@ export let EventPage = {
     if (source.nextPageToken === undefined) {
       return null;
     }
-    const args = self.match(root.calendars().events().page());
-    return root.calendars({ id: calendarId }).events().page({ ...args, pageToken: source.nextPageToken });
+    const { id: calendarId } = self.match(root.calendars.one());
+    const args = self.match(root.calendars.one().events().page());
+    return root.calendars.one({ id: calendarId }).events().page({ ...args, pageToken: source.nextPageToken });
   },
   items({ source }) {
     return source.items;
@@ -98,7 +99,7 @@ export let EventPage = {
 export const Event = {
   self({ source, self, parent }) {
     const { id: calendarId } = self.match(root.calendars.one());
-    return root.calendars({ id: calendarId }).events().one({ id: source.id });
+    return root.calendars.one({ id: calendarId }).events().one({ id: source.id });
   },
   instance() {
     return {};
