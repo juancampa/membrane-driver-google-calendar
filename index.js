@@ -33,20 +33,7 @@ export const CalendarCollection = {
     return result;
   },
   async page({ args }) {
-    const options = {};
-    const params = [
-      'maxResults',
-      'minAcessRole',
-      'pageToken',
-      'showDeleted',
-      'showHidden',
-    ];
-    for (let param of params) {
-      if (args[param] !== undefined) {
-        options[param] = args[param];
-      }
-    }
-    const result = await client.calendarList.list({ ...options });
+    const result = await client.calendarList.list({ ...args });
     return result;
   },
 };
