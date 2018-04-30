@@ -94,8 +94,7 @@ export let EventPage = {
 
 export const Event = {
   self({ source, self, parent }) {
-    const { id: calendarId } = self.match(root.calendars.one());
-    return root.calendars.one({ id: calendarId }).events().one({ id: source.id });
+    return self || parent.ref.pop().pop().one({ id: source.id });
   },
   instance() {
     return {};
