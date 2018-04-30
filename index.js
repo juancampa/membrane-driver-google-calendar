@@ -94,7 +94,7 @@ export let EventPage = {
 
 export const Event = {
   self({ source, self, parent }) {
-    return self || parent.ref.pop().push('one', { id: source.id });
+    return self || parent.ref.pop().pop().push('one', { id: source.id });
   },
   instance() {
     return {};
