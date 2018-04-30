@@ -367,6 +367,13 @@
     ],
     "computedFields": [
      {
+      "name": "self",
+      "type": "Ref",
+      "ofType": {
+       "type": "Event"
+      }
+     },
+     {
       "name": "instance",
       "type": "EventInstanceCollection"
      }

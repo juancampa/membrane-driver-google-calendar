@@ -76,6 +76,7 @@ schema.type('EventPage')
   .computed('next', 'EventPage*')
 
 schema.type('Event')
+  .computed('self', 'Event*')
   .field('id', 'String')
   .field('summary', 'String')
   .field('end', 'EventTime')
